@@ -3,15 +3,14 @@
 using namespace std;
 
 template <typename T> 
-CircularBuffer<T>::CircularBuffer(unsigned int pSize) : size(pSize), full(0), first(0), count(0)
+CircularBuffer<T>::CircularBuffer(unsigned int pSize) : size(pSize), full(0), first(0), count(0), elements(NULL)
 {
 	if(pSize<=0)
 	{
 		if(PRINT_ERROR) cout << "Error: the buffer length could not be less than 1 element.\n";
 		exit(-1); //return 0;
 	}
-	elements = NULL;
-	elements = (T*) malloc(size * sizeof(T));
+	elements = reinterpret_cast<T*>(malloc(size * sizeof(T)));
 	if (elements == NULL)
 	{
 		if(PRINT_ERROR) cout << "Error: Out of memory when allocating circularBuffer\n";
